@@ -15,9 +15,14 @@ export default async function Signup() {
             Sign in
           </Link>
         </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+        <div className="flex flex-col gap-2 mt-8">
           <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
+          <Input
+            name="email"
+            placeholder="you@example.com"
+            className="mb-3"
+            required
+          />
           <Label htmlFor="password">Password</Label>
           <Input
             type="password"
