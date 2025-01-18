@@ -20,23 +20,23 @@ export default function Navbar() {
     <footer className="flex items-center justify-center gap-10 w-full pb-5 h-[80px] bg-black">
       <Link href="/protected/map" onClick={() => setPath("map")}>
         {path === "map" ? (
-          <SMapPinIcon className="w-8" />
+          <SMapPinIcon className="w-8" fill="white" />
         ) : (
-          <OMapPinIcon className="w-8" />
+          <OMapPinIcon className="w-8" stroke="white" />
         )}
       </Link>
       <Link href="/protected/feed" onClick={() => setPath("feed")}>
         {path === "feed" ? (
-          <SHomeIcon className="w-8" />
+          <SHomeIcon className="w-8" fill="white" />
         ) : (
-          <OHomeIcon className="w-8" />
+          <OHomeIcon className="w-8" stroke="white" />
         )}
       </Link>
       <Link href="/protected/profile" onClick={() => setPath("profile")}>
         {path === "profile" ? (
-          <SUserIcon className="w-8" />
+          <SUserIcon className="w-8" fill="white" />
         ) : (
-          <OUserIcon className="w-8" />
+          <OUserIcon className="w-8" stroke="white" />
         )}
       </Link>
     </footer>
