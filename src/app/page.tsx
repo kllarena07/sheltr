@@ -30,16 +30,10 @@ export default function Home() {
         <Button className="w-full font-bold h-[50px]">Login</Button>
       </section>
       <section className="flex justify-between">
-        <Link
-          href="/forgot-password"
-          className="font-bold text-blue-600 hover:underline"
-        >
+        <Link href="/forgot-password" className="font-bold text-blue-600">
           Forgot Password?
         </Link>
-        <Link
-          href="/sign-up"
-          className="font-bold text-blue-600 hover:underline"
-        >
+        <Link href="/sign-up" className="font-bold text-blue-600">
           Sign Up
         </Link>
       </section>
