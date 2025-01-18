@@ -6,8 +6,8 @@ export default function ProtectedRootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="w-full">
-      <section className="h-[calc(100dvh-80px)] bg-white">{children}</section>
+    <main className="flex flex-col w-full h-dvh">
+      <section className="bg-white h-full">{children}</section>
       <Navbar />
     </main>
   );

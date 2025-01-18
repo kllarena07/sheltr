@@ -10,34 +10,35 @@ import {
   HomeIcon as SHomeIcon,
   UserIcon as SUserIcon,
 } from "@heroicons/react/24/solid";
-import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const [path, setPath] = useState("feed");
 
   return (
     <footer className="flex items-center justify-center gap-10 w-full pb-5 h-[80px] bg-black">
-      <a href="/protected/map">
-        {pathname === "/protected/map" ? (
+      <Link href="/protected/map" onClick={() => setPath("map")}>
+        {path === "map" ? (
           <SMapPinIcon className="w-8" />
         ) : (
           <OMapPinIcon className="w-8" />
         )}
-      </a>
-      <a href="/protected/feed">
-        {pathname === "/protected/feed" ? (
+      </Link>
+      <Link href="/protected/feed" onClick={() => setPath("feed")}>
+        {path === "feed" ? (
           <SHomeIcon className="w-8" />
         ) : (
           <OHomeIcon className="w-8" />
         )}
-      </a>
-      <a href="/protected/profile">
-        {pathname === "/protected/profile" ? (
+      </Link>
+      <Link href="/protected/profile" onClick={() => setPath("profile")}>
+        {path === "profile" ? (
           <SUserIcon className="w-8" />
         ) : (
           <OUserIcon className="w-8" />
         )}
-      </a>
+      </Link>
     </footer>
   );
 }
