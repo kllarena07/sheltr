@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 export default function Profile() {
   return (
     <section>
-      <Link href="/">Logout</Link>
+      <Link href="/protected/logout/">Logout</Link>
       <form className="flex-1 flex flex-col w-full gap-2 text-foreground [&>input]:mb-6 min-w-64 max-w-64 mx-auto">
         <h1 className="text-2xl font-medium">Reset Password</h1>
         <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">

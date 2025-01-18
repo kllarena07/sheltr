@@ -5,6 +5,18 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const logoutAction = async () => {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error(error.code + " " + error.message);
+    return encodedRedirect("error", "/", error.message);
+  } else {
+    return encodedRedirect("success", "/", "Successfully logged out");
+  }
+};
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
