@@ -60,7 +60,7 @@ export default function Map() {
               }
             }}
           >
-            <form className="flex flex-col gap-5 bg-white opacity-100 w-5/6 p-5">
+            <form className="flex flex-col gap-5 bg-white opacity-100 w-5/6 p-5 shadow-2xl">
               <h1 className="font-bold text-2xl">Report a Disaster</h1>
               <Textarea
                 placeholder="What's happening?"
@@ -90,7 +90,9 @@ export default function Map() {
                   <SelectItem value="earthquake">Low</SelectItem>
                 </SelectContent>
               </Select>
-              <Button className="w-full">Report disaster</Button>
+              <Button className="w-full h-[50px] font-bold">
+                Report disaster
+              </Button>
             </form>
           </div>
         ) : undefined}
