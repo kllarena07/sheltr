@@ -15,10 +15,15 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { createReportAction } from "@/app/actions";
 import { createClient } from "@/utils/supabase/client";
 import Report from "@/components/report/report";
+import { ReportProps } from "@/components/report/report";
 
 export default function Map() {
   const [createState, setCreateState] = useState(false);
-  const [infoState, setInfoState] = useState({
+
+  const [infoState, setInfoState] = useState<{
+    active: boolean;
+    disaster: ReportProps["reportData"] | undefined;
+  }>({
     active: false,
     disaster: undefined,
   });
@@ -27,7 +32,7 @@ export default function Map() {
     latitude: 37.8,
   });
 
-  const [disasters, setDisasters] = useState([]);
+  const [disasters, setDisasters] = useState<{ [key: string]: unknown }[]>([]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -115,17 +120,17 @@ export default function Map() {
         >
           {disasters.map((disaster) => (
             <Marker
-              key={disaster.id}
+              key={String(disaster.id)}
               onClick={(e) => {
                 e.originalEvent.stopPropagation(); // Prevent map click event
                 setInfoState({
                   active: true,
-                  disaster: disaster,
+                  disaster: disaster as ReportProps["reportData"],
                 });
                 console.log(`Marker ${disaster.id} clicked`);
               }}
-              longitude={disaster.location[0]}
-              latitude={disaster.location[1]}
+              longitude={(disaster.location as [number, number])[0]}
+              latitude={(disaster.location as [number, number])[1]}
               anchor="bottom"
               offset={[0, 0]}
             />
@@ -141,7 +146,7 @@ export default function Map() {
             }}
           >
             <div className="w-5/6">
-              <Report reportData={infoState.disaster} />
+              {infoState.disaster && <Report reportData={infoState.disaster} />}
             </div>
           </div>
         ) : undefined}

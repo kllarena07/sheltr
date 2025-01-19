@@ -15,7 +15,7 @@ type DisasterType =
   | "landslide"
   | "tornado";
 
-type ReportProps = {
+export type ReportProps = {
   reportData: {
     created_at: string;
     description: string;
