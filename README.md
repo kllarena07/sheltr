@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Inspiration
 
-## Getting Started
+The relentless wildfires raging across Los Angeles have pushed local authorities, particularly the Los Angeles Fire Department (LAFD), to the brink. Already understaffed compared to national standards for large cities, the department is struggling to manage the overwhelming demands of the crisis. The staffing shortages have forced available personnel to work extended shifts, sometimes lasting 24 hours or more, leading to fatigue that can impact decision-making and safety in high-stress situations.
 
-First, run the development server:
+Adding to the challenge, over 16,000 personnel are currently deployed alongside thousands of pieces of equipment, stretching resources to their absolute limit. This unprecedented mobilization is unsustainable, with the risk of equipment wear and tear and mounting burnout among first responders.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Recognizing these critical issues, our team was driven to develop Sheltr, a crowdsourced disaster overwatch app. Designed to relieve some of the burden on overstretched local authorities, Sheltr empowers the general population to contribute actively to disaster management. By allowing citizens to report incidents, share critical updates, and assist with relief efforts in real-time, Sheltr provides a much-needed boost to emergency response capabilities, enhancing coordination and resilience during this challenging time.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What it does
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sheltr harnesses the power of crowdsourcing to create a safe and dynamic overwatch system for disaster management. Once users create an account and log into the app, they are presented with a live feed displaying real-time updates about ongoing incidents in their local area.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For those who wish to contribute, Sheltr offers an intuitive map feature. Users can create disaster reports by simply dropping a pin on the exact location of an incident and providing key details. These reports include the type of disaster occurring, a description of the event, the time and location, and an assessment of the situation’s severity.
 
-## Learn More
+To ensure the most critical updates receive attention, Sheltr uses a community-driven prioritization system. Reports with the most likes are pushed to the top of the feed, highlighting the most pressing issues for both responders and the community. This streamlined approach ensures that vital information is easily accessible, improving situational awareness and enabling quicker, more effective responses to disasters.
 
-To learn more about Next.js, take a look at the following resources:
+## How we built it
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For the development of Sheltr we employed a robust tech stack to ensure the app is reliable, responsive, and secure.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Backend Development:
+- Next.js Route Handlers and Form Actions as a way to handle server logic like database communication and handling auth sessions
+- Supabase as our main database and auth provider
 
-## Deploy on Vercel
+Frontend Development:
+- Next.js as the main driver for building a progressive web app that adapts to mobile users
+- TailwindCSS for framework styling
+- Figma for frontend design and planning
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Challenges we ran into
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Initially, my team was comprised of me and my friend but the friend had to attend to some personal matters, leading to her withdrawal from the hackathon. Regardless, I went in head first to create the app that we had planned to make.
+
+One challenge that I ran into was design. I am more of a backend person rather than a frontend one so learning more about good design principles was an eye-opening experience that have contributed to my fullstack experience.
+
+## Accomplishments that we're proud of
+
+I am incredibly proud that I was able to build this app in such a short amount of time, while also learning how to turn my Next app into a PWA and how to use Supabase realtime features.
+
+## What's next for Sheltr
+
+Sheltr aims to continue its enhancement by gathering user feedback and driving its design from there. 
+
+We are also considering potential development features like:
+- Partnering with local authorities or emergency services for a faster response time to save more lives. Disaster zones would immediately be sent to the authorities.
+- Using collected data on disasters to contribute to predictive AI models to allow the development for early warning systems, improved resource allocation, and enhanced disaster response strategies
+- Collaborating with professionals to create an AI agent that will safely guide a citizen that may be in potential danger
