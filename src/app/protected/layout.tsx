@@ -7,7 +7,7 @@ export default function ProtectedRootLayout({
 }>) {
   return (
     <main className="flex flex-col w-full h-dvh">
-      <section className="bg-white h-full">{children}</section>
+      {children}
       <Navbar />
     </main>
   );

@@ -99,11 +99,11 @@ export default function Feed() {
   });
 
   return (
-    <section className="px-3 pt-7 h-full">
+    <section className="px-3 pt-7 h-[calc(100%-75px)] flex flex-col">
       <h1 className="text-black text-center text-3xl font-bold">
         Sheltr Event Feed
       </h1>
-      <ScrollArea className="flex-1 overflow-auto">
+      <ScrollArea className="h-[calc(100%-36px)] max-h-[calc(100%-36px)]">
         {disasters
           .sort((a, b) => {
             try {
