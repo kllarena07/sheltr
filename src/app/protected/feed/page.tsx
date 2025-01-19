@@ -5,6 +5,16 @@ import { createClient } from "@/utils/supabase/client";
 import Report, { ReportProps } from "@/components/report/report";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+function isValidJson(str: string) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
 export default function Feed() {
   const [disasters, setDisasters] = useState<ReportProps["reportData"][]>([]);
 
@@ -94,24 +104,24 @@ export default function Feed() {
         Sheltr Event Feed
       </h1>
       <ScrollArea className="flex-1 overflow-auto">
-        <ul className="flex flex-col gap-5 pt-3">
-          {disasters
-            .sort((a, b) => {
-              try {
-                const likesA = a.likes ? JSON.parse(a.likes) : [];
-                const likesB = b.likes ? JSON.parse(b.likes) : [];
-                return likesB.length - likesA.length;
-              } catch (error) {
-                console.error("Error parsing likes:", error);
-                return 0;
-              }
-            })
-            .map((disaster, index) => (
-              <li key={index}>
-                <Report reportData={disaster}></Report>
-              </li>
-            ))}
-        </ul>
+        {disasters
+          .sort((a, b) => {
+            try {
+              const likesA =
+                a.likes && isValidJson(a.likes) ? JSON.parse(a.likes) : [];
+              const likesB =
+                b.likes && isValidJson(b.likes) ? JSON.parse(b.likes) : [];
+              return likesB.length - likesA.length;
+            } catch (error) {
+              console.error("Error parsing likes:", error);
+              return 0;
+            }
+          })
+          .map((disaster) => (
+            <div key={disaster.id} className="mt-5">
+              <Report reportData={disaster}></Report>
+            </div>
+          ))}
       </ScrollArea>
     </section>
   );

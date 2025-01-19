@@ -34,7 +34,7 @@ export const createReportAction = async (formData: FormData) => {
     severity,
     address,
     user_id: user.data.user.id,
-    likes: 0,
+    likes: JSON.stringify([]),
   });
 
   if (error) {
