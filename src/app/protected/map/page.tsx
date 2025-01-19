@@ -60,10 +60,14 @@ export default function Map() {
               }
             }}
           >
-            <form className="bg-white opacity-100 w-5/6 p-5">
+            <form className="flex flex-col gap-5 bg-white opacity-100 w-5/6 p-5">
               <h1 className="font-bold text-2xl">Report a Disaster</h1>
-              <Textarea placeholder="What's happening?" name="description" />
-              <Select name="type">
+              <Textarea
+                placeholder="What's happening?"
+                name="description"
+                required
+              />
+              <Select name="type" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select disaster type" />
                 </SelectTrigger>
@@ -76,7 +80,17 @@ export default function Map() {
                   <SelectItem value="tornado">Tornado</SelectItem>
                 </SelectContent>
               </Select>
-              <Button>Report disaster</Button>
+              <Select name="severity" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select disaster severity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="fire">High</SelectItem>
+                  <SelectItem value="flood">Medium</SelectItem>
+                  <SelectItem value="earthquake">Low</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button className="w-full">Report disaster</Button>
             </form>
           </div>
         ) : undefined}
