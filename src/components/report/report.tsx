@@ -24,6 +24,7 @@ export type ReportProps = {
     location: Float32Array;
     severity: SeverityType;
     type: DisasterType;
+    address: string;
   };
 };
 
@@ -55,11 +56,18 @@ function LowHazardWarning() {
 }
 
 export default function Report({ reportData }: ReportProps) {
-  const { created_at, description, location, severity, type } = reportData;
+  const { created_at, description, severity, type, address } = reportData;
+
+  const split_created = created_at.split(",");
+  const date = split_created[0];
+  const time = split_created[1];
+  const split_address = address.split(",");
+  const street = split_address[0];
+  const city = split_address[1];
 
   return (
     <section className="flex flex-col gap-2 border p-5 bg-white">
-      <header>
+      <header className="flex justify-between">
         <div className="flex items-center gap-2">
           {severity === "high" && <HighHazardWarning />}
           {severity === "medium" && <MediumHazardWarning />}
@@ -68,6 +76,10 @@ export default function Report({ reportData }: ReportProps) {
             {type.charAt(0).toUpperCase() + type.slice(1)} Alert
           </h2>
         </div>
+        <div className="flex flex-col">
+          <small>{date}</small>
+          <small>{time}</small>
+        </div>
       </header>
 
       <main>
@@ -75,14 +87,14 @@ export default function Report({ reportData }: ReportProps) {
       </main>
 
       <footer>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div className="flex gap-1 items-center">
             <MapPinIcon className="w-4 h-4" stroke="gray" />
-            <small className="text-gray-500">Riverside Country</small>
+            <div className="flex flex-col">
+              <small className="text-gray-500">{street}</small>
+              <small className="text-gray-500">{city}</small>
+            </div>
           </div>
-          <small className="text-gray-500">{created_at}</small>
-        </div>
-        <div className="flex justify-end mt-2.5">
           <ThumbsUp className="w-6 h-6" />
         </div>
       </footer>
