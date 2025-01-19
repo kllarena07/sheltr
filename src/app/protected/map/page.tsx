@@ -16,6 +16,7 @@ import { createReportAction } from "@/app/actions";
 import { createClient } from "@/utils/supabase/client";
 import Report from "@/components/report/report";
 import { ReportProps } from "@/components/report/report";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Map() {
   const [createState, setCreateState] = useState(false);
@@ -99,6 +100,7 @@ export default function Map() {
 
   return (
     <section className="relative max-w-full h-full overflow-hidden">
+      <Toaster />
       <div className="w-full h-full relative">
         <MapView
           onClick={(e) => {
@@ -159,7 +161,15 @@ export default function Map() {
               }
             }}
           >
-            <form className="flex flex-col gap-5 bg-white opacity-100 w-5/6 p-5 shadow-2xl">
+            <form
+              className="flex flex-col gap-5 bg-white opacity-100 w-5/6 p-5 shadow-2xl"
+              onSubmit={(e) => {
+                e.preventDefault();
+                createReportAction(new FormData(e.currentTarget));
+                setCreateState(false);
+                toast.success("Report created successfully");
+              }}
+            >
               <h1 className="font-bold text-2xl">Report a Disaster</h1>
               <Textarea
                 placeholder="What's happening?"
@@ -201,10 +211,7 @@ export default function Map() {
                 value={markerPosition.latitude}
                 required
               />
-              <Button
-                className="w-full h-[50px] font-bold"
-                formAction={createReportAction}
-              >
+              <Button className="w-full h-[50px] font-bold" type="submit">
                 Report disaster
               </Button>
             </form>
