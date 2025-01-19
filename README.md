@@ -27,16 +27,6 @@ Frontend Development:
 - TailwindCSS for framework styling
 - Figma for frontend design and planning
 
-## Challenges we ran into
-
-Initially, my team was comprised of me and my friend but the friend had to attend to some personal matters, leading to her withdrawal from the hackathon. Regardless, I went in head first to create the app that we had planned to make.
-
-One challenge that I ran into was design. I am more of a backend person rather than a frontend one so learning more about good design principles was an eye-opening experience that have contributed to my fullstack experience.
-
-## Accomplishments that we're proud of
-
-I am incredibly proud that I was able to build this app in such a short amount of time, while also learning how to turn my Next app into a PWA and how to use Supabase realtime features.
-
 ## What's next for Sheltr
 
 Sheltr aims to continue its enhancement by gathering user feedback and driving its design from there. 
