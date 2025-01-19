@@ -5,6 +5,8 @@ import {
   ThumbsUp,
   TriangleAlertIcon,
 } from "lucide-react";
+import { Button } from "../ui/button";
+import { createClient } from "@/utils/supabase/client";
 
 type SeverityType = "high" | "medium" | "low";
 type DisasterType =
@@ -20,11 +22,12 @@ export type ReportProps = {
     created_at: string;
     description: string;
     id: number;
-    likes: number;
     location: Float32Array;
     severity: SeverityType;
     type: DisasterType;
     address: string;
+    user_id: string;
+    likes: string;
   };
 };
 
@@ -56,7 +59,16 @@ function LowHazardWarning() {
 }
 
 export default function Report({ reportData }: ReportProps) {
-  const { created_at, description, severity, type, address } = reportData;
+  const {
+    created_at,
+    description,
+    severity,
+    type,
+    address,
+    user_id,
+    id,
+    likes,
+  } = reportData;
 
   const split_created = created_at.split(",");
   const date = split_created[0];
@@ -64,6 +76,48 @@ export default function Report({ reportData }: ReportProps) {
   const split_address = address.split(",");
   const street = split_address[0];
   const city = split_address[1];
+
+  const handleLike = async () => {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+      .from("disasters")
+      .select("likes")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching likes:", error);
+      return;
+    }
+
+    if (data) {
+      let likesArray = [];
+      try {
+        likesArray = JSON.parse(data.likes || "[]");
+      } catch (e) {
+        console.error("Error parsing likes:", e);
+      }
+      if (!likesArray.includes(user_id)) {
+        likesArray.push(user_id.toString());
+      } else {
+        likesArray = likesArray.filter(
+          (like: string) => like !== user_id.toString()
+        );
+      }
+
+      const { error: updateError } = await supabase
+        .from("disasters")
+        .update({ likes: JSON.stringify(likesArray) })
+        .eq("id", id);
+
+      if (updateError) {
+        console.error("Error updating likes:", updateError);
+      } else {
+        console.log("Likes updated successfully");
+      }
+    }
+  };
 
   return (
     <section className="flex flex-col gap-2 border p-5 bg-white">
@@ -95,7 +149,13 @@ export default function Report({ reportData }: ReportProps) {
               <small className="text-gray-500">{city}</small>
             </div>
           </div>
-          <ThumbsUp className="w-6 h-6" />
+          <Button onClick={handleLike}>
+            {likes.includes(user_id) ? (
+              <ThumbsUp className="w-6 h-6" fill="white" />
+            ) : (
+              <ThumbsUp className="w-6 h-6" stroke="white" />
+            )}
+          </Button>
         </div>
       </footer>
     </section>

@@ -26,7 +26,8 @@ export default function Feed() {
               hour: "2-digit",
               minute: "2-digit",
             });
-            const formattedLocation = JSON.parse(location);
+            const formattedLocation =
+              typeof location === "string" ? JSON.parse(location) : location;
             return {
               ...rest,
               location: formattedLocation,
@@ -94,11 +95,22 @@ export default function Feed() {
       </h1>
       <ScrollArea className="flex-1 overflow-auto">
         <ul className="flex flex-col gap-5 pt-3">
-          {disasters.map((disaster, index) => (
-            <li key={index}>
-              <Report reportData={disaster}></Report>
-            </li>
-          ))}
+          {disasters
+            .sort((a, b) => {
+              try {
+                const likesA = a.likes ? JSON.parse(a.likes) : [];
+                const likesB = b.likes ? JSON.parse(b.likes) : [];
+                return likesB.length - likesA.length;
+              } catch (error) {
+                console.error("Error parsing likes:", error);
+                return 0;
+              }
+            })
+            .map((disaster, index) => (
+              <li key={index}>
+                <Report reportData={disaster}></Report>
+              </li>
+            ))}
         </ul>
       </ScrollArea>
     </section>
