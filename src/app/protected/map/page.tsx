@@ -29,12 +29,6 @@ export default function Map() {
             setCreateState(!createState);
             setMarkerPosition({ longitude: lngLat.lng, latitude: lngLat.lat });
           }}
-          onZoom={(e) => {
-            setMarkerPosition({
-              longitude: e.viewState.zoom,
-              latitude: e.viewState.zoom,
-            });
-          }}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           initialViewState={{
             longitude: -122.4,
