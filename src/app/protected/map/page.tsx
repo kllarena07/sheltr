@@ -14,9 +14,14 @@ import { Button } from "@/components/ui/button";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { createReportAction } from "@/app/actions";
 import { createClient } from "@/utils/supabase/client";
+import Report from "@/components/report/report";
 
 export default function Map() {
   const [createState, setCreateState] = useState(false);
+  const [infoState, setInfoState] = useState({
+    active: false,
+    disaster: undefined,
+  });
   const [markerPosition, setMarkerPosition] = useState({
     longitude: -122.4,
     latitude: 37.8,
@@ -93,8 +98,11 @@ export default function Map() {
         <MapView
           onClick={(e) => {
             const { lngLat } = e;
-            setCreateState(!createState);
-            setMarkerPosition({ longitude: lngLat.lng, latitude: lngLat.lat });
+            setCreateState(true);
+            setMarkerPosition({
+              longitude: lngLat.lng,
+              latitude: lngLat.lat,
+            });
           }}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           initialViewState={{
@@ -105,16 +113,38 @@ export default function Map() {
           mapStyle="mapbox://styles/mapbox/streets-v9"
           attributionControl={false}
         >
-          {disasters.map(({ id, location }) => (
+          {disasters.map((disaster) => (
             <Marker
-              key={id}
-              longitude={location[0]}
-              latitude={location[1]}
+              key={disaster.id}
+              onClick={(e) => {
+                e.originalEvent.stopPropagation(); // Prevent map click event
+                setInfoState({
+                  active: true,
+                  disaster: disaster,
+                });
+                console.log(`Marker ${disaster.id} clicked`);
+              }}
+              longitude={disaster.location[0]}
+              latitude={disaster.location[1]}
               anchor="bottom"
               offset={[0, 0]}
             />
           ))}
         </MapView>
+        {infoState.active ? (
+          <div
+            className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setInfoState({ ...infoState, active: !infoState.active });
+              }
+            }}
+          >
+            <div className="w-5/6">
+              <Report reportData={infoState.disaster} />
+            </div>
+          </div>
+        ) : undefined}
         {createState ? (
           <div
             className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
