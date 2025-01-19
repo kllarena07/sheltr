@@ -19,6 +19,15 @@ import { ReportProps } from "@/components/report/report";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Map() {
+  const [currentPosition, setCurrentPosition] = useState({
+    longitude: undefined,
+    latitude: undefined,
+  });
+
+  const [markerPosition, setMarkerPosition] = useState({
+    longitude: undefined,
+    latitude: undefined,
+  });
   const [createState, setCreateState] = useState(false);
 
   const [infoState, setInfoState] = useState<{
@@ -28,14 +37,26 @@ export default function Map() {
     active: false,
     disaster: undefined,
   });
-  const [markerPosition, setMarkerPosition] = useState({
-    longitude: -122.4,
-    latitude: 37.8,
-  });
 
   const [disasters, setDisasters] = useState<{ [key: string]: unknown }[]>([]);
 
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCurrentPosition({
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+          });
+        },
+        (error) => {
+          console.error("Error getting current location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+
     const supabase = createClient();
 
     const channel = supabase
@@ -97,6 +118,13 @@ export default function Map() {
     };
   }, []);
 
+  if (
+    currentPosition.longitude === undefined ||
+    currentPosition.latitude === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="relative max-w-full h-full overflow-hidden">
       <Toaster />
@@ -112,13 +140,20 @@ export default function Map() {
           }}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           initialViewState={{
-            longitude: -122.4,
-            latitude: 37.8,
+            longitude: currentPosition.longitude,
+            latitude: currentPosition.latitude,
             zoom: 14,
           }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           attributionControl={false}
         >
+          <Marker
+            longitude={currentPosition.longitude}
+            latitude={currentPosition.latitude}
+            anchor="bottom"
+            offset={[0, 0]}
+            color="blue"
+          />
           {disasters.map((disaster) => (
             <Marker
               key={String(disaster.id)}
@@ -134,6 +169,13 @@ export default function Map() {
               latitude={(disaster.location as [number, number])[1]}
               anchor="bottom"
               offset={[0, 0]}
+              color={
+                disaster.severity === "high"
+                  ? "red"
+                  : disaster.severity === "medium"
+                  ? "yellow"
+                  : "lightblue"
+              }
             />
           ))}
         </MapView>
