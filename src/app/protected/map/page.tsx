@@ -19,12 +19,18 @@ import { ReportProps } from "@/components/report/report";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Map() {
-  const [currentPosition, setCurrentPosition] = useState({
+  const [currentPosition, setCurrentPosition] = useState<{
+    longitude: number | undefined;
+    latitude: number | undefined;
+  }>({
     longitude: undefined,
     latitude: undefined,
   });
 
-  const [markerPosition, setMarkerPosition] = useState({
+  const [markerPosition, setMarkerPosition] = useState<{
+    longitude: number | undefined;
+    latitude: number | undefined;
+  }>({
     longitude: undefined,
     latitude: undefined,
   });
@@ -78,7 +84,6 @@ export default function Map() {
               prev.filter((disaster) => disaster.id !== payload.old.id)
             );
           }
-          console.log("Change received!", disasters);
         }
       )
       .subscribe();
@@ -88,7 +93,7 @@ export default function Map() {
       if (data) {
         const formattedData = await Promise.all(
           data.map(async (disaster) => {
-            const { created_at, user_id, location, ...rest } = disaster;
+            const { created_at, location, ...rest } = disaster;
 
             const date = new Date(created_at);
             const formattedDate = date.toLocaleDateString();
@@ -105,8 +110,6 @@ export default function Map() {
             };
           })
         );
-
-        console.log(formattedData);
         setDisasters(formattedData);
       }
       if (error) console.error("Error fetching disasters:", error);
@@ -116,7 +119,7 @@ export default function Map() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  });
 
   if (
     currentPosition.longitude === undefined ||
@@ -163,7 +166,6 @@ export default function Map() {
                   active: true,
                   disaster: disaster as ReportProps["reportData"],
                 });
-                console.log(`Marker ${disaster.id} clicked`);
               }}
               longitude={(disaster.location as [number, number])[0]}
               latitude={(disaster.location as [number, number])[1]}
