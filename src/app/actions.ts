@@ -6,11 +6,17 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const createReportAction = async (formData: FormData) => {
-  const longitude = formData.get("longitude");
-  const latitude = formData.get("latitude");
+  const longitude = parseFloat(formData.get("longitude") as string);
+  const latitude = parseFloat(formData.get("latitude") as string);
   const description = formData.get("description");
   const type = formData.get("type");
   const severity = formData.get("severity");
+
+  const res = await fetch(
+    `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`
+  );
+  const data = await res.json();
+  const address = `${data.features[0].properties.address_line1}, ${data.features[0].properties.city}`;
 
   const supabase = await createClient();
   const user = await supabase.auth.getUser();
@@ -26,6 +32,7 @@ export const createReportAction = async (formData: FormData) => {
     description,
     type,
     severity,
+    address,
     user_id: user.data.user.id,
     likes: 0,
   });
