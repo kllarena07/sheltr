@@ -32,10 +32,18 @@ export const createReportAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.message);
-    return encodedRedirect("error", "/", "Could not create report");
+    return encodedRedirect(
+      "error",
+      "/protected/map",
+      "Could not create report"
+    );
   }
 
-  return encodedRedirect("success", "/", "Report created successfully");
+  return encodedRedirect(
+    "success",
+    "/protected/map",
+    "Report created successfully"
+  );
 };
 
 export const logoutAction = async () => {
