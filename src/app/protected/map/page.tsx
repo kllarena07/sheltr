@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { createReportAction } from "@/app/actions";
 
 export default function Map() {
   const [createState, setCreateState] = useState(false);
@@ -79,12 +80,27 @@ export default function Map() {
                   <SelectValue placeholder="Select disaster severity" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="fire">High</SelectItem>
-                  <SelectItem value="flood">Medium</SelectItem>
-                  <SelectItem value="earthquake">Low</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
                 </SelectContent>
               </Select>
-              <Button className="w-full h-[50px] font-bold">
+              <input
+                type="hidden"
+                name="longitude"
+                value={markerPosition.longitude}
+                required
+              />
+              <input
+                type="hidden"
+                name="latitude"
+                value={markerPosition.latitude}
+                required
+              />
+              <Button
+                className="w-full h-[50px] font-bold"
+                formAction={createReportAction}
+              >
                 Report disaster
               </Button>
             </form>

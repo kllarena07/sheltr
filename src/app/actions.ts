@@ -5,6 +5,39 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const createReportAction = async (formData: FormData) => {
+  const longitude = formData.get("longitude");
+  const latitude = formData.get("latitude");
+  const description = formData.get("description");
+  const type = formData.get("type");
+  const severity = formData.get("severity");
+
+  const supabase = await createClient();
+  const user = await supabase.auth.getUser();
+
+  if (!user.data.user) {
+    return encodedRedirect("error", "/", "User not authenticated");
+  }
+
+  const location = JSON.stringify([longitude, latitude]);
+
+  const { error } = await supabase.from("disasters").insert({
+    location,
+    description,
+    type,
+    severity,
+    user_id: user.data.user.id,
+    likes: 0,
+  });
+
+  if (error) {
+    console.error(error.message);
+    return encodedRedirect("error", "/", "Could not create report");
+  }
+
+  return encodedRedirect("success", "/", "Report created successfully");
+};
+
 export const logoutAction = async () => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
