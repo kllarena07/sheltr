@@ -74,7 +74,6 @@ export default function Map() {
             const formattedTime = date.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
-              second: "2-digit",
             });
             const formattedLocation = JSON.parse(location);
 

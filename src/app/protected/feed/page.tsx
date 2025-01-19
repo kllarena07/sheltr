@@ -47,7 +47,6 @@ export default function Feed() {
             const formattedTime = date.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
-              second: "2-digit",
             });
             const formattedLocation = JSON.parse(location);
 
@@ -72,12 +71,12 @@ export default function Feed() {
   }, []);
 
   return (
-    <section className="px-3 py-7">
+    <section className="px-3 pt-7 h-full">
       <h1 className="text-black text-center text-3xl font-bold">
         Sheltr Event Feed
       </h1>
-      <ScrollArea className="pt-3 h-[714.117px]">
-        <ul className="flex flex-col gap-5">
+      <ScrollArea className="flex-1 overflow-auto">
+        <ul className="flex flex-col gap-5 pt-3">
           {disasters.map((disaster, index) => (
             <li key={index}>
               <Report reportData={disaster}></Report>
