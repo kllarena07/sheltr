@@ -1,4 +1,10 @@
-import { MapPinIcon, OctagonAlertIcon, ThumbsUp } from "lucide-react";
+import {
+  CircleAlertIcon,
+  MapPinIcon,
+  OctagonAlertIcon,
+  ThumbsUp,
+  TriangleAlertIcon,
+} from "lucide-react";
 
 type SeverityType = "high" | "medium" | "low";
 type DisasterType =
@@ -30,14 +36,34 @@ function HighHazardWarning() {
   );
 }
 
+function MediumHazardWarning() {
+  return (
+    <div className="flex bg-yellow-500 py-1 px-2 rounded-full gap-1">
+      <TriangleAlertIcon stroke="white" />
+      <span className="text-white font-bold">Medium</span>
+    </div>
+  );
+}
+
+function LowHazardWarning() {
+  return (
+    <div className="flex bg-blue-500 py-1 px-2 rounded-full gap-1">
+      <CircleAlertIcon stroke="white" />
+      <span className="text-white font-bold">Low</span>
+    </div>
+  );
+}
+
 export default function Report({ reportData }: ReportProps) {
   const { created_at, description, location, severity, type } = reportData;
 
   return (
-    <section className="flex flex-col gap-2 border p-5">
+    <section className="flex flex-col gap-2 border p-5 bg-white">
       <header>
         <div className="flex items-center gap-2">
-          <HighHazardWarning />
+          {severity === "high" && <HighHazardWarning />}
+          {severity === "medium" && <MediumHazardWarning />}
+          {severity === "low" && <LowHazardWarning />}
           <h2 className="font-bold text-2xl">
             {type.charAt(0).toUpperCase() + type.slice(1)} Alert
           </h2>
