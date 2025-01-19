@@ -46,11 +46,12 @@ export const createReportAction = async (formData: FormData) => {
     );
   }
 
-  return encodedRedirect(
-    "success",
-    "/protected/map",
-    "Report created successfully"
-  );
+  // hacky fix
+  // return encodedRedirect(
+  //   "success",
+  //   "/protected/map",
+  //   "Report created successfully"
+  // );
 };
 
 export const logoutAction = async () => {
