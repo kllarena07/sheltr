@@ -1,4 +1,4 @@
-# Sheltr
+# Sheltr: 2nd place Winner at [WayneHacks 3](https://waynehacks-3.devpost.com/)
 
 Your crowdsourced disaster overwatch.
 
